@@ -1,10 +1,19 @@
 import express from 'express';
+import {
+  createCategory,
+  deleteCategory,
+  getCategories,
+  getCategory,
+  updateCategory,
+} from '../controllers/category';
 
 const router = express.Router();
 
+router.route('/').get(getCategories).post(createCategory);
 router
-  .route('/')
-  .get((req, res) => res.json({ message: 'Success' }))
-  .post((req, res) => res.json({ message: req.body }));
+  .route('/:id')
+  .get(getCategory)
+  .put(updateCategory)
+  .delete(deleteCategory);
 
 export default router;
