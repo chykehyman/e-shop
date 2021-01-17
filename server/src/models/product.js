@@ -13,6 +13,10 @@ const productSchema = new Schema({
     type: String,
     default: '',
   },
+  brand: {
+    type: String,
+    default: '',
+  },
   image: {
     type: String,
     default: '',
@@ -54,6 +58,14 @@ const productSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+productSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+productSchema.set('toJSON', {
+  virtuals: true,
 });
 
 export default model('Product', productSchema);

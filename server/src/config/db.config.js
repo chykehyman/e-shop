@@ -15,5 +15,6 @@ export default async (uri) => {
     );
   } catch (error) {
     console.error(`Database Connection Failed: ${error.message}`);
+    process.exit();
   }
 };

@@ -1,8 +1,9 @@
 import Category from '../models/category';
-import asyncHandler from '../middlewares/asynHandler';
+import asyncHandler from '../middlewares/asyncHandler';
 import jsonRes from '../utils/jsonResponse';
 import checkId from '../utils/checkId';
 
+const CATEGORY = 'category';
 export const getCategories = asyncHandler(async (req, res, next) => {
   const categoryList = await Category.find();
 
@@ -16,7 +17,7 @@ export const getCategories = asyncHandler(async (req, res, next) => {
 
 export const getCategory = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  checkId(id, next);
+  checkId(id, CATEGORY, next);
   const category = await Category.findById(id);
   if (!category) {
     return next(jsonRes.error(404, `Category with ID ${id} not found`));
@@ -33,7 +34,7 @@ export const createCategory = asyncHandler(async (req, res, next) => {
 
 export const updateCategory = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  checkId(id, next);
+  checkId(id, CATEGORY, next);
   const category = await Category.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
@@ -48,7 +49,7 @@ export const updateCategory = asyncHandler(async (req, res, next) => {
 
 export const deleteCategory = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  checkId(id, next);
+  checkId(id, CATEGORY, next);
   const category = await Category.findByIdAndDelete(id);
   if (!category) {
     return next(jsonRes.error(404, `Category with ID ${id} not found`));
