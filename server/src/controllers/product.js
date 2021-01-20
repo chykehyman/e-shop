@@ -68,12 +68,12 @@ export const deleteProduct = asyncHandler(async (req, res, next) => {
 });
 
 export const getProductsCount = asyncHandler(async (req, res, next) => {
-  const productCount = await Product.countDocuments((count) => count);
+  const productsCount = await Product.countDocuments((count) => count);
   return jsonRes.success(
     res,
     200,
     'Products count retrieved successfully',
-    productCount
+    productsCount
   );
 });
 

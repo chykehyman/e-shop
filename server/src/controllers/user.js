@@ -67,11 +67,11 @@ export const deleteUser = asyncHandler(async (req, res, next) => {
 });
 
 export const getUsersCount = asyncHandler(async (req, res, next) => {
-  const userCount = await User.countDocuments((count) => count);
+  const usersCount = await User.countDocuments((count) => count);
   return jsonRes.success(
     res,
     200,
     'Users count retrieved successfully',
-    userCount
+    usersCount
   );
 });
