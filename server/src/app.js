@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import expressJWT from 'express-jwt';
 import 'dotenv/config';
 import 'colors';
 
@@ -12,6 +13,7 @@ import orderRoutes from './routes/order';
 
 import connectDB from './config/db.config';
 import errorHandler from './middlewares/errorHandler';
+import verifyToken from './middlewares/verifyToken';
 
 const app = express();
 const {
@@ -19,6 +21,7 @@ const {
   API_URL,
   NODE_ENV = 'development',
   MONGODB_URI,
+  SECRET_KEY,
 } = process.env;
 const corsHandler = cors();
 
@@ -37,11 +40,12 @@ app.use(
 );
 app.use(corsHandler);
 app.options('*', corsHandler);
+app.use(verifyToken());
 
 connectDB(MONGODB_URI);
 
 /************ Routes Usage **********/
-app.use(`${API_URL}/users  `, userRoutes);
+app.use(`${API_URL}/users`, userRoutes);
 app.use(`${API_URL}/products`, productRoutes);
 app.use(`${API_URL}/categories`, categoryRoutes);
 app.use(`${API_URL}/orders`, orderRoutes);

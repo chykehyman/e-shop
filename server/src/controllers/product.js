@@ -67,13 +67,23 @@ export const deleteProduct = asyncHandler(async (req, res, next) => {
   return jsonRes.success(res, 200, 'Product deleted successfully', product);
 });
 
-export const getProductCount = asyncHandler(async (req, res, next) => {
+export const getProductsCount = asyncHandler(async (req, res, next) => {
   const productCount = await Product.countDocuments((count) => count);
-  return jsonRes.success(res, 200, 'Product count retrieved', productCount);
+  return jsonRes.success(
+    res,
+    200,
+    'Products count retrieved successfully',
+    productCount
+  );
 });
 
 export const getFeaturedProduct = asyncHandler(async (req, res, next) => {
   const { count = 0 } = req.query;
   const products = await Product.find({ isFeatured: true }).limit(+count);
-  return jsonRes.success(res, 200, 'Featured products retrieved', products);
+  return jsonRes.success(
+    res,
+    200,
+    'Featured products retrieved successfully',
+    products
+  );
 });
