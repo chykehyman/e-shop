@@ -35,7 +35,15 @@ export const createProduct = asyncHandler(async (req, res, next) => {
   const category = await Category.findById(req.body.category);
   if (!category) return next(jsonRes.error(400, 'Invalid category'));
 
-  const product = await Product.create(req.body);
+  const file = req.file;
+  if (!file) return next(jsonRes.error(400, 'Please upload a product image'));
+
+  const imagePath = `${req.protocol}://${req.get('host')}/${file.path}`;
+  const product = await Product.create({
+    ...req.body,
+    image: imagePath,
+  });
+
   return jsonRes.success(res, 201, 'Product created successfully', product);
 });
 
@@ -85,5 +93,35 @@ export const getFeaturedProduct = asyncHandler(async (req, res, next) => {
     200,
     'Featured products retrieved successfully',
     products
+  );
+});
+
+export const uploadProductGallery = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  checkId(id, PRODUCT, next);
+
+  const files = req.files;
+  const imagesPaths = [];
+  if (files) {
+    files.map((file) =>
+      imagesPaths.push(`${req.protocol}://${req.get('host')}/${file.path}`)
+    );
+  }
+
+  const product = await Product.findByIdAndUpdate(
+    id,
+    { images: imagesPaths },
+    { new: true }
+  );
+
+  if (!product) {
+    return next(jsonRes.error(404, `Product with ID ${id} not found`));
+  }
+
+  return jsonRes.success(
+    res,
+    200,
+    'Product gallery uploaded successfully',
+    product
   );
 });

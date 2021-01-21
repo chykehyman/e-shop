@@ -6,14 +6,14 @@ import 'dotenv/config';
 import 'colors';
 
 /**************** Routes Import ***************/
-import userRoutes from './routes/user';
-import productRoutes from './routes/product';
-import categoryRoutes from './routes/category';
-import orderRoutes from './routes/order';
+import userRoutes from './src/routes/user';
+import productRoutes from './src/routes/product';
+import categoryRoutes from './src/routes/category';
+import orderRoutes from './src/routes/order';
 
-import connectDB from './config/db.config';
-import errorHandler from './middlewares/errorHandler';
-import verifyToken from './middlewares/verifyToken';
+import connectDB from './src/config/db.config';
+import errorHandler from './src/middlewares/errorHandler';
+import verifyToken from './src/middlewares/verifyToken';
 
 const app = express();
 const {
@@ -41,6 +41,7 @@ app.use(
 app.use(corsHandler);
 app.options('*', corsHandler);
 app.use(verifyToken());
+app.use('/public', express.static(__dirname + '/public'));
 
 connectDB(MONGODB_URI);
 
