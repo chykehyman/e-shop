@@ -4,16 +4,15 @@ import ProductCard from './ProductCard';
 
 const { width } = Dimensions.get('window');
 
-const Product = ({ item }) => {
-  // if (item.empty) return <View style={[styles.itemView]} />;
-  return (
-    <TouchableOpacity>
-      <View style={styles.itemView}>
-        <ProductCard {...item} />
-      </View>
-    </TouchableOpacity>
-  );
-};
+const Product = ({ item, navigation }) => (
+  <TouchableOpacity
+    onPress={() => navigation.navigate('Product Detail', { item })}
+  >
+    <View style={styles.itemView}>
+      <ProductCard {...item} />
+    </View>
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
   itemView: {

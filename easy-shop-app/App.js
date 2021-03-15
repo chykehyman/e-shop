@@ -1,20 +1,14 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import ProductContainer from './screens/products/ProductContainer';
+import { NavigationContainer } from '@react-navigation/native';
+
 import Header from './shared/Header';
+import AppStack from './navigators/AppStack';
 
-export default function App() {
+export default App = () => {
   return (
-    <View style={styles.container}>
+    <NavigationContainer>
       <Header />
-      <ProductContainer />
-    </View>
+      <AppStack />
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+};

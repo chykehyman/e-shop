@@ -9,10 +9,9 @@ import SearchedProducts from './SearchedProducts';
 import Banner from '../../shared/Banner';
 import CategoryFilter from './CategoryFilter';
 
-const numOfColumns = 2;
 const { height } = Dimensions.get('window');
 
-const ProductContainer = () => {
+const ProductContainer = ({ navigation }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [focus, setFocus] = useState(false);
@@ -70,7 +69,10 @@ const ProductContainer = () => {
         </Item>
       </Header>
       {focus ? (
-        <SearchedProducts filteredProducts={filteredProducts} />
+        <SearchedProducts
+          filteredProducts={filteredProducts}
+          navigation={navigation}
+        />
       ) : (
         <ScrollView>
           <View>
@@ -89,7 +91,13 @@ const ProductContainer = () => {
             {productsCtg.length > 0 ? (
               <View style={styles.listContainer}>
                 {productsCtg.map((item) => {
-                  return <Product key={item._id} item={item} />;
+                  return (
+                    <Product
+                      key={item._id}
+                      item={item}
+                      navigation={navigation}
+                    />
+                  );
                 })}
               </View>
             ) : (
